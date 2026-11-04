@@ -192,15 +192,47 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 @keyframes btnShine{0%{left:-70%}55%{left:140%}100%{left:140%}}
 @keyframes capGlow{0%,100%{box-shadow:0 4px 0 #6b4e0e,0 10px 26px rgba(0,0,0,.55),0 0 14px rgba(212,175,55,.3),inset 0 1px 0 rgba(255,255,255,.7)}50%{box-shadow:0 4px 0 #6b4e0e,0 10px 26px rgba(0,0,0,.55),0 0 30px rgba(241,208,122,.65),inset 0 1px 0 rgba(255,255,255,.8)}}
 @media(max-width:760px){.to-top{right:12px;bottom:16px;padding:10px 16px 10px 12px;gap:8px}.to-top .tt-txt{font-size:.76rem}}
-.btn::before,.plat::before,.ptab::before,.to-top::before{content:'';position:absolute;left:50%;top:50%;width:160%;height:160%;border-radius:50%;background:radial-gradient(circle,rgba(255,243,200,.9) 0%,rgba(241,208,122,.55) 28%,rgba(212,175,55,.25) 48%,transparent 70%);transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none;z-index:0;mix-blend-mode:screen}
-.btn:hover::before,.plat:hover::before,.ptab:hover::before,.to-top:hover::before,.btn:focus-visible::before,.plat:focus-visible::before,.ptab.active::before{animation:flashOut .7s cubic-bezier(.22,1,.36,1)}
-@keyframes flashOut{0%{transform:translate(-50%,-50%) scale(0);opacity:.95}45%{opacity:.8}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
 .fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
 .fade-up.vis{opacity:1;transform:none}
+/* ===== ПРЕЛОАДЕР: знак Марса как у Volvo ===== */
+.preloader{position:fixed;inset:0;z-index:9999;background:#0a0b0d;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .6s ease,visibility .6s}
+.preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+.pl-emblem{position:relative;width:min(58vw,236px);aspect-ratio:1/1;filter:drop-shadow(0 14px 34px rgba(0,0,0,.75)) drop-shadow(0 0 26px rgba(212,175,55,.30))}
+.pl-emblem svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.pl-tiger{position:absolute;z-index:3;left:46.5%;top:51%;width:44%;height:44%;transform:translate(-50%,-50%);object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7));animation:plPulse 2.4s ease-in-out infinite}
+@keyframes plPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.03)}}
+.pl-shine-rect{animation:plSweep 2.8s ease-in-out infinite}
+@keyframes plSweep{0%{transform:translateX(-220px) skewX(-18deg)}55%,100%{transform:translateX(420px) skewX(-18deg)}}
+.pl-txt{position:absolute;left:0;right:0;bottom:7%;text-align:center;font-weight:800;font-size:clamp(1rem,3.4vw,1.35rem);letter-spacing:.22em;text-transform:uppercase;background:linear-gradient(100deg,#a8842c 15%,#f6e3a1 35%,#fff8dc 50%,#f1d07a 65%,#a8842c 85%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:plGoldWave 3.2s linear infinite}
+@keyframes plGoldWave{0%{background-position:120% 0}100%{background-position:-120% 0}}
+.pl-emblem>svg{z-index:1 !important}
+.pl-tiger{z-index:3 !important}
 </style>
 </head>
 <body class="lang-ru">
-
+<div class="preloader" id="preloader">
+<div class="pl-emblem">
+<svg viewBox="12 20 172 172" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1">
+<defs>
+<linearGradient id="plGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe6a2"/><stop offset=".28" stop-color="#e9c25a"/><stop offset=".52" stop-color="#d4af37"/><stop offset=".78" stop-color="#a8842c"/><stop offset="1" stop-color="#8a6a1c"/></linearGradient>
+<linearGradient id="plTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(255,248,220,.85)"/><stop offset=".45" stop-color="rgba(255,248,220,0)"/></linearGradient>
+<linearGradient id="plShineGrad" x1="0" y1="0" x2="1" y2="0"><stop offset=".35" stop-color="rgba(255,255,255,0)"/><stop offset=".5" stop-color="rgba(255,255,255,.9)"/><stop offset=".65" stop-color="rgba(255,255,255,0)"/></linearGradient>
+<mask id="plMask"><circle cx="92" cy="108" r="62" fill="none" stroke="#fff" stroke-width="20"/><path d="M136 64 L166 34" fill="none" stroke="#fff" stroke-width="20"/><path d="M176 24 L148 30 L170 52 Z" fill="#fff"/></mask>
+</defs>
+<circle cx="92" cy="108" r="62" fill="none" stroke="#5d440c" stroke-width="24"/>
+<path d="M136 64 L166 34" fill="none" stroke="#5d440c" stroke-width="24" stroke-linecap="round"/>
+<path d="M176 24 L148 30 L170 52 Z" fill="#5d440c" stroke="#5d440c" stroke-width="6" stroke-linejoin="round"/>
+<circle cx="92" cy="108" r="62" fill="none" stroke="url(#plGold)" stroke-width="18"/>
+<path d="M136 64 L166 34" fill="none" stroke="url(#plGold)" stroke-width="18" stroke-linecap="round"/>
+<path d="M176 24 L148 30 L170 52 Z" fill="url(#plGold)" stroke="url(#plGold)" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="92" cy="108" r="66" fill="none" stroke="url(#plTop)" stroke-width="5" opacity=".8"/>
+<circle cx="92" cy="108" r="58" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="3"/>
+<g mask="url(#plMask)"><rect class="pl-shine-rect" x="0" y="-40" width="120" height="280" fill="url(#plShineGrad)"/></g>
+</svg>
+<img class="pl-tiger" style="z-index:3" src="assets/img/logo-medallion.png" alt="" onerror="this.style.display='none'">
+</div>
+<span class="pl-txt">TIAGRAX</span>
+</div>
 <header>
 <div class="container nav">
 <a class="logo" href="#top"><span class="logo-mark"><img src="assets/img/logo-medallion.png" alt="TiagraX" onerror="this.onerror=null;this.src='assets/img/favicon.png'"></span><span class="logo-txt">TiagraX</span></a>
@@ -618,6 +650,45 @@ renderProducts();observeAll();
 function openShelfLb(src){var lb=document.getElementById('shelfLb');if(src){lb.querySelector('img').src=src;}lb.classList.add('open');requestAnimationFrame(function(){requestAnimationFrame(function(){lb.classList.add('shown');});});document.body.style.overflow='hidden';}
 function closeShelfLb(){var lb=document.getElementById('shelfLb');lb.classList.remove('shown');setTimeout(function(){lb.classList.remove('open');document.body.style.overflow='';},320);}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('shelfLb').classList.contains('open'))closeShelfLb();});
+</script>
+<script>
+(function(){
+var pl=document.getElementById('preloader');
+if(!pl)return;
+function hide(){
+if(pl&&!pl.classList.contains('done')){
+pl.classList.add('done');
+setTimeout(function(){if(pl&&pl.parentNode)pl.parentNode.removeChild(pl);},700);
+}
+}
+// Прячем сразу после построения DOM (не ждём картинки!)
+if(document.readyState==='complete'||document.readyState==='interactive'){
+setTimeout(hide,900);
+}else{
+document.addEventListener('DOMContentLoaded',function(){setTimeout(hide,900);});
+}
+// Жёсткая страховка: максимум через 2.5 сек точно уйдёт
+setTimeout(hide,2500);
+})();
+</script>
+<script>
+(function(){
+function badgeNodes(){
+var out=[];
+document.querySelectorAll('iframe').forEach(function(f){var s=((f.src||'')+' '+(f.id||'')+' '+(f.className||'')).toLowerCase();if(s.indexOf('netlify')!==-1||s.indexOf('badge')!==-1){out.push(f);}});
+document.querySelectorAll('body *').forEach(function(el){
+if(el.children.length>3)return;
+var tx=(el.textContent||'');
+if(tx.length<80&&/powered\s+by\s+netlify/i.test(tx)){out.push(el);}
+});
+return out;}
+function kill(){
+var ns=badgeNodes();if(!ns.length)return false;
+ns.forEach(function(el){var p=el,i;for(i=0;i<5&&p;i++){var st=window.getComputedStyle(p);if(st.position==='fixed'||st.position==='absolute'){break;}p=p.parentElement;}(p||el).remove();});
+return true;}
+var tries=0;
+var iv=setInterval(function(){tries++;if(kill()||tries>=15){clearInterval(iv);}},400);
+})();
 </script>
 </body>
 </html>
