@@ -252,6 +252,15 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
   setTimeout(hide, 2200);
   // возврат «назад» со смартфона (bfcache): глушим остаток на всякий случай.
   window.addEventListener('pageshow', function(e){ if(e.persisted) hide(); });
+    // Страховка видимости: не трогает CSS и нижний скрипт.
+  // Если IntersectionObserver из самого низа ещё не докачался (тонкий
+  // мобильный канал через океан), все .fade-up останутся opacity:0 и будет
+  // видна только шапка. Раскрываем их по таймеру принудительно. На нормальном
+  // канале IO отработает раньше, и это безвредно (classList.add идемпотентен).
+  setTimeout(function(){
+    var f=document.querySelectorAll('.fade-up');
+    for(var i=0;i<f.length;i++){ f[i].classList.add('vis'); }
+  }, 2000);
 })();
 </script>
 <header>
