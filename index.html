@@ -233,6 +233,27 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 </div>
 <span class="pl-txt">TIAGRAX</span>
 </div>
+<script>
+(function(){
+  var pl=document.getElementById('preloader');
+  if(!pl) return;
+  var done=false;
+  function hide(){
+    if(done) return; done=true;
+    pl.classList.add('done');
+    setTimeout(function(){ if(pl&&pl.parentNode) pl.parentNode.removeChild(pl); },700);
+  }
+  // штатный путь: DOM готов -> прячем (на вайфае почти мгновенно)
+  if(document.readyState!=='loading'){ hide(); }
+  else { document.addEventListener('DOMContentLoaded', hide); }
+  // ГЛАВНОЕ: жёсткий потолок стартует СВЕРХУ, в момент отрисовки прелоадера,
+  // а не после скачивания всего инлайн-документа. На медленном мобильном
+  // это режет зависание до ~2.2с вместо «вечно, пока не докачается словарь».
+  setTimeout(hide, 2200);
+  // возврат «назад» со смартфона (bfcache): глушим остаток на всякий случай.
+  window.addEventListener('pageshow', function(e){ if(e.persisted) hide(); });
+})();
+</script>
 <header>
 <div class="container nav">
 <a class="logo" href="#top"><span class="logo-mark"><img src="assets/img/logo-medallion.png" alt="TiagraX" onerror="this.onerror=null;this.src='assets/img/favicon.png'"></span><span class="logo-txt">TiagraX</span></a>
@@ -275,7 +296,7 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 <section class="block" id="about">
 <div class="container">
 <div class="split">
-<div class="split-img fade-up"><img src="assets/img/india-farm.jpg" alt="Ayurvedic herbs farm in India" onerror="this.style.display='none'"></div>
+<div class="split-img fade-up"><img src="assets/img/india-farm.jpg" alt="Ayurvedic herbs farm in India" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
 <div class="split-text fade-up">
 <h2 data-i18n="about_h">Корни силы — в Индии</h2>
 <p data-i18n="about_p1">Аюрведа — древнейшая система медицины, насчитывающая более 5000 лет. Мы используем проверенные веками растения: тонкат али, муира пуама, йохимбе, женьшень и другие адаптогены, выращенные в экологически чистых регионах Индии.</p>
@@ -293,7 +314,7 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 <p data-i18n="cer_p1">Веками мастера Аюрведы готовили экстракты вручную: сушили корни на солнце, растирали в латунных ступках, настаивали по особым ритуалам. Мы бережно сохраняем это отношение к сырью.</p>
 <p data-i18n="cer_p2">Современное производство лишь усиливает традицию: точные дозировки, стерильность и контроль на каждом шаге — чтобы каждая таблетка несла силу растения именно так, как задумывали мастера.</p>
 </div>
-<div class="split-img fade-up"><img src="assets/img/ceremony.jpg" alt="Ayurvedic ceremony" onerror="this.style.display='none'"></div>
+<div class="split-img fade-up"><img src="assets/img/ceremony.jpg" alt="Ayurvedic ceremony" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
 </div>
 </div>
 </section>
@@ -303,12 +324,12 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 <h2 class="sec-title fade-up" data-i18n="qual_h">Почему нам доверяют</h2>
 <p class="sec-sub fade-up" data-i18n="qual_sub">Прозрачность на каждом этапе — от поля до вашей руки.</p>
 <div class="split" style="margin-bottom:44px">
-<div class="split-img fade-up"><img src="assets/img/lab.jpg" alt="GMP laboratory" onerror="this.style.display='none'"></div>
+<div class="split-img fade-up"><img src="assets/img/lab.jpg" alt="GMP laboratory" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
 <div class="split-text fade-up">
 <h2 data-i18n="lab_h">Собственный лабораторный контроль</h2>
 <p data-i18n="lab_p1">Каждая партия тестируется независимой лабораторией на активные вещества, тяжёлые металлы и микробиологию. Только после этого продукт получает фирменную наклейку и уходит в банку.</p>
 <div class="seal-line">
-<img src="assets/img/quality-seal.png" alt="Quality seal" onerror="this.style.display='none'">
+<img src="assets/img/quality-seal.png" alt="Quality seal" loading="lazy" decoding="async" onerror="this.style.display='none'">
 <div><b style="color:var(--gl)" data-i18n="lab_seal_t">Печать качества</b><br><small style="color:var(--muted)" data-i18n="lab_seal_d">Тиснёная эмблема на каждой партии</small></div>
 </div>
 </div>
@@ -346,21 +367,21 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 <p class="sec-sub fade-up" data-i18n="aw_sub">Наши формулы не просто продаются — их празднуют. За три года бренд взял высшие награды фестивалей wellness-продукции Азии: каждая медаль — подтверждение чистоты состава и силы действия.</p>
 <div class="sticker-showcase">
 <div class="stick-card fade-up">
-<div class="stick-ring" onclick="openShelfLb(this.querySelector('img').src)"><div class="inner"><img src="assets/img/medal-star.png" alt="Золотая медаль Дели" onerror="this.onerror=null;this.src='assets/img/logo-medallion.png'"></div></div>
+<div class="stick-ring" onclick="openShelfLb(this.querySelector('img').src)"><div class="inner"><img src="assets/img/medal-star.png" alt="Золотая медаль Дели" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/img/logo-medallion.png'"></div></div>
 <b data-i18n="m1_t">Золото · Дели 2023</b><small data-i18n="m1_d">Международный Аюрведический Фестиваль — 1 место в номинации «Мужская сила года». Жюри отметило мягкость действия и чистоту состава.</small>
 </div>
 <div class="stick-card fade-up">
-<div class="stick-ring" onclick="openShelfLb(this.querySelector('img').src)"><div class="inner"><img src="assets/img/medal-chakra.png" alt="Гран-при Мумбаи" onerror="this.onerror=null;this.src='assets/img/logo-medallion.png'"></div></div>
+<div class="stick-ring" onclick="openShelfLb(this.querySelector('img').src)"><div class="inner"><img src="assets/img/medal-chakra.png" alt="Гран-при Мумбаи" loading="lazy" decoding="async"onerror="this.onerror=null;this.src='assets/img/logo-medallion.png'"></div></div>
 <b data-i18n="m2_t">Гран-при · Мумбаи 2024</b><small data-i18n="m2_d">Wellness Expo Asia — комбо-формула CialiZxD стала хитом выставки: «две задачи в одной таблетке».</small>
 </div>
 <div class="stick-card fade-up">
-<div class="stick-ring" onclick="openShelfLb(this.querySelector('img').src)"><div class="inner"><img src="assets/img/medal-star9.png" alt="Приз зрительских симпатий Коломбо" onerror="this.onerror=null;this.src='assets/img/logo-medallion.png'"></div></div>
+<div class="stick-ring" onclick="openShelfLb(this.querySelector('img').src)"><div class="inner"><img src="assets/img/medal-star9.png" alt="Приз зрительских симпатий Коломбо"  loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/img/logo-medallion.png'"></div></div>
 <b data-i18n="m3_t">Приз зрительских симпатий · Коломбо 2025</b><small data-i18n="m3_d">Фестиваль Традиций Востока — более 10 000 гостей проголосовали за TiagraX рупией в специальной урне.</small>
 </div>
 </div>
 <p class="aw-note fade-up" data-i18n="aw_note">Медали хранятся в офисе бренда в Джайпуре; каждую партию банок сопровождает копия сертификата фестиваля.</p>
 <div class="mockup-band fade-up">
-<div class="mb-img" onclick="openShelfLb('assets/img/shelf-composite.jpg')"><img src="assets/img/shelf-composite.jpg" alt="TiagraX на полке" onerror="this.parentElement.style.display='none'"></div>
+<div class="mb-img" onclick="openShelfLb('assets/img/shelf-composite.jpg')"><img src="assets/img/shelf-composite.jpg" alt="TiagraX на полке" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"></div>
 <div class="cap"><b data-i18n="mk_cap">Как это выглядит на полке:</b> <span data-i18n="mk_txt">прозрачная банка и прозрачная крышка — ничего лишнего, только фармацевтический пластик. Главное отличие — фирменная наклейка с авторским тигром, нарисованным индийским художником: яркая, узнаваемая, читается издалека. Именно она отличает оригинал от серых пустышек и вызывает доверие ещё до вскрытия упаковки.</span></div>
 </div>
 </div>
@@ -368,7 +389,7 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 
 <section class="block" id="reviews">
 <div class="container">
-<div class="rev-band fade-up"><img src="assets/img/reviews-band.jpg" alt="Пара на рассвете" onerror="this.style.display='none'"></div>
+<div class="rev-band fade-up"><img src="assets/img/reviews-band.jpg" alt="Пара на рассвете" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
 <h2 class="sec-title fade-up" data-i18n="rv_h">Истории тех, у кого уже всё получилось</h2>
 <p class="sec-sub fade-up" data-i18n="rv_sub">Реальные отзывы наших покупателей — мужчин и женщин. Мы сохраняем анонимность и правим только орфографию.</p>
 <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
@@ -423,7 +444,7 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 <div class="container">
 <div class="foot-grid">
 <div class="foot-col">
-<div class="foot-brand"><span class="foot-emblem"><img src="assets/img/quality-seal.png" alt="" onerror="this.parentElement.style.display='none'"></span><span class="logo-txt">TiagraX</span></div>
+<div class="foot-brand"><span class="foot-emblem"><img src="assets/img/quality-seal.png" alt="" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"></span><span class="logo-txt">TiagraX</span></div>
 <p data-i18n="foot_desc">Официальный информационный ресурс бренда аюрведических пищевых добавок TiagraX. Производитель: Индия.</p>
 </div>
 <div class="foot-col">
@@ -448,7 +469,7 @@ footer{background:#0b0c0e;padding:50px 0 26px;margin-top:40px;border-top:1px sol
 <a href="https://www.wildberries.ru/seller/4039075" target="_blank">Wildberries ↗</a>
 </div>
 </div>
-<div class="foot-band"><img src="assets/img/reviews-band.jpg" alt="TiagraX - happy ending" onerror="this.parentElement.style.display='none'"></div>
+<div class="foot-band"><img src="assets/img/reviews-band.jpg" alt="TiagraX - happy ending"  loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"></div>
 <div class="disc" data-i18n="foot_disc">⚠️ Продукция не является лекарственным средством. Имеются противопоказания. Перед применением необходима консультация специалиста. 18+</div>
 <div class="copy">© 2026 TiagraX · Ayurvedic Wellness Pvt. Ltd., India<br><span data-i18n="foot_rights">Все права защищены. Информация носит справочный характер.</span></div>
 </div>
@@ -642,7 +663,7 @@ renderProducts();observeAll();
 <script>
 (function(){var b=document.getElementById('toTop');function upd(){var s=window.scrollY>600;b.classList.toggle('show',s);var l=document.getElementById('toTopLabel');if(l)l.classList.toggle('show',s);}window.addEventListener('scroll',upd,{passive:true});upd();})();
 </script>
-<div class="shelf-lb" id="shelfLb"' onclick="closeShelfLb()">
+<div class="shelf-lb" id="shelfLb" onclick="closeShelfLb()">
 <button class="lb-x" onclick="event.stopPropagation();closeShelfLb()">✕</button>
 <img src="assets/img/shelf-composite.jpg" alt="TiagraX на полке - увеличено">
 </div>
@@ -650,26 +671,6 @@ renderProducts();observeAll();
 function openShelfLb(src){var lb=document.getElementById('shelfLb');if(src){lb.querySelector('img').src=src;}lb.classList.add('open');requestAnimationFrame(function(){requestAnimationFrame(function(){lb.classList.add('shown');});});document.body.style.overflow='hidden';}
 function closeShelfLb(){var lb=document.getElementById('shelfLb');lb.classList.remove('shown');setTimeout(function(){lb.classList.remove('open');document.body.style.overflow='';},320);}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('shelfLb').classList.contains('open'))closeShelfLb();});
-</script>
-<script>
-(function(){
-var pl=document.getElementById('preloader');
-if(!pl)return;
-function hide(){
-if(pl&&!pl.classList.contains('done')){
-pl.classList.add('done');
-setTimeout(function(){if(pl&&pl.parentNode)pl.parentNode.removeChild(pl);},700);
-}
-}
-// Прячем сразу после построения DOM (не ждём картинки!)
-if(document.readyState==='complete'||document.readyState==='interactive'){
-setTimeout(hide,900);
-}else{
-document.addEventListener('DOMContentLoaded',function(){setTimeout(hide,900);});
-}
-// Жёсткая страховка: максимум через 2.5 сек точно уйдёт
-setTimeout(hide,2500);
-})();
 </script>
 <script>
 (function(){
